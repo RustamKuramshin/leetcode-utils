@@ -60,7 +60,7 @@ class ListNode {
 
 // initialize it: new ListNode()
 ```
-Print out your linked list:
+Print out your linked list (takes into account cyclic (closed) linked lists):
 ```java
 listNode.printListNode()
 // will print [3, 2, 4, 5, 10]
@@ -128,6 +128,33 @@ TreeNode root = TreeNode.array2btree([2,1,3,null,4,null,7]);
 Or turn your binary tree into a level-order array:
 ```java
 Integer[] levelOrderArray = TreeNode.btree2array(root);
+```
+
+### Test Case Player For Integer Cache Problems
+A player of test cases for tasks in which you need to work with an integer cache.
+The cache should follow the following interface:
+```java
+interface Cache {
+    int get(int key);
+    void put(int key, int value);
+}
+```
+Create a text file in the resource directory with a sequence of cache methods from the test case:
+```text
+["LFUCache","put","put","put","put","put"}
+```
+Create a text file in the resource directory with the actual cache method parameters from the test case:
+```text
+[[10],[10,13],[3,17],[6,11],[10,5],[9,10]]
+```
+The number of methods and the number of sets of actual parameters must match!
+Put these text files in the resource directory.
+
+
+Call the static playTestCase() method of the CacheTestCasePlayer class. This will cause an instance of your cache class to be created and methods with parameters will be called as in the test case with leetcode!
+The playTestCase() method needs to be passed a reference to your cache class, the path to the file with the sequence of cache methods and the path to the file with the parameters of these methods.
+```java
+CacheTestCasePlayer.playTestCase(LFUCache.class,"test-cases-data/p460/17/methods.txt", "test-cases-data/p460/17/data.txt");
 ```
 
 ## Enjoy!

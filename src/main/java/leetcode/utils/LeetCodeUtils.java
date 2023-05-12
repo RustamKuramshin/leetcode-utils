@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -217,20 +218,20 @@ public class LeetCodeUtils {
     }
 
     /**
-     * Test case player in the task with LFU cache.
+     * Test case player in the task with cache.
      */
-    public static class LFUCacheTestCasePlayer {
+    public static class CacheTestCasePlayer {
 
         /**
          * Method launching test cases.
          * SAVE THE TEST DATA IN FILES IN THE RESOURCES DIRECTORY!
          *
-         * @param lfuClass         - LFU Cache class reference (clazz for reflection).
+         * @param cacheClass       - Cache class reference (clazz for reflection).
          * @param methodsFilePath  - Path to the file where the array of methods is saved.
          * @param testDataFilePath - Path to the file where the array of test data is saved.
          * @throws NoSuchMethodException
          */
-        public static void playTestCase(Class<?> lfuClass, String methodsFilePath, String testDataFilePath) throws NoSuchMethodException {
+        public static void playTestCase(Class<?> cacheClass, String methodsFilePath, String testDataFilePath) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
             String methods = CommonUtils.readFileToString(methodsFilePath);
             String testData = CommonUtils.readFileToString(testDataFilePath);
@@ -261,23 +262,20 @@ public class LeetCodeUtils {
             }
 
             // play
-            Object lfu = null;
-            Constructor<?> constructor = lfuClass.getConstructor(int.class);
+            Constructor<?> constructor = cacheClass.getConstructor(int.class);
+            Object cache = constructor.newInstance(tdl.get(0)[0]);
 
-            for (int i = 0; i < methodsList.size() - 1; i++) {
+            for (int i = 1; i < methodsList.size() - 1; i++) {
 
                 try {
                     switch (methodsList.get(i)) {
-                        case "LFUCache":
-                            lfu = constructor.newInstance(tdl.get(i)[0]);
-                            break;
                         case "put":
-                            Method putMethod = lfu.getClass().getDeclaredMethod("put", int.class, int.class);
-                            putMethod.invoke(lfu, tdl.get(i)[0], tdl.get(i)[1]);
+                            Method putMethod = cache.getClass().getDeclaredMethod("put", int.class, int.class);
+                            putMethod.invoke(cache, tdl.get(i)[0], tdl.get(i)[1]);
                             break;
                         case "get":
-                            Method getMethod = lfu.getClass().getDeclaredMethod("get", int.class);
-                            getMethod.invoke(lfu, tdl.get(i)[0]);
+                            Method getMethod = cache.getClass().getDeclaredMethod("get", int.class);
+                            getMethod.invoke(cache, tdl.get(i)[0]);
                             break;
                         default:
                             throw new RuntimeException("Unknown method");
@@ -305,7 +303,7 @@ public class LeetCodeUtils {
          */
         public static String readFileToString(String filePath) {
 
-            ClassLoader classLoader = LeetCodeUtils.LFUCacheTestCasePlayer.class.getClassLoader();
+            ClassLoader classLoader = LeetCodeUtils.CacheTestCasePlayer.class.getClassLoader();
             StringBuilder sb = new StringBuilder();
 
             try (InputStream inputStream = classLoader.getResourceAsStream(filePath);
