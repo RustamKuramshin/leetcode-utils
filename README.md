@@ -6,7 +6,8 @@ A java library that will help you solve problems with leetcode. The library is r
 ## Features
 * Built-in class of a singly linked list ListNode, supplemented with useful functions such as: printing a list.
 * Built-in class of a doubly linked list Node, supplemented with useful functions such as: printing a list.
-* Built-in binary search class TreeNode, supplemented with useful functions such as: initialization of a binary tree from a string representation of an integer level-order array, conversion of a binary tree into an array and vice versa.
+* Built-in binary search class TreeNode, supplemented with useful functions such as: **initialization of a binary tree from a string representation of an integer level-order array**, conversion of a binary tree into an array and vice versa.
+* **A player of test cases for tasks with an integer cache.**
 
 All classes of leetcode's data structure (Node, ListNode and TreeNode) can be used in your code if you write a solution to the problem in your IDE.
 
@@ -20,7 +21,7 @@ curl -O https://raw.githubusercontent.com/RustamKuramshin/leetcode-utils/main/sr
 
 Or manually copy the contents of the java class file from the following link [https://github.com/RustamKuramshin/leetcode-utils/blob/main/src/main/java/leetcode/utils/LeetCodeUtils.java](https://github.com/RustamKuramshin/leetcode-utils/blob/main/src/main/java/leetcode/utils/LeetCodeUtils.java).
 
-#### **REMOVE THE JAVA PACKAGE DECLARATION FROM THE JAVA CLASS FILE. OR SPECIFY THE NAME OF THE PACKAGE YOU NEED!**
+**REMOVE THE JAVA PACKAGE DECLARATION FROM THE JAVA CLASS FILE. OR SPECIFY THE NAME OF THE PACKAGE YOU NEED!**
 
 
 If necessary, import the class into your java/kotlin code:
