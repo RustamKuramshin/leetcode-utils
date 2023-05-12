@@ -231,10 +231,10 @@ public class LeetCodeUtils {
          * @param testDataFilePath - Path to the file where the array of test data is saved.
          * @throws NoSuchMethodException
          */
-        public static void playTestCase(Class<?> cacheClass, String methodsFilePath, String testDataFilePath) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        public static void playTestCase(Class<?> cacheClass, String methodsFilePath, String testDataFilePath) {
 
             String methods = CommonUtils.readFileToString(methodsFilePath);
-            String testData = CommonUtils.readFileToString(testDataFilePath);
+            String testData = CommonUtils.readFileToString(testDataFilePath).replaceAll("\\s+","");
 
             // processing methods
             List<String> methodsList = Arrays.stream(methods.substring(1, methods.length() - 1).split(","))
@@ -262,8 +262,22 @@ public class LeetCodeUtils {
             }
 
             // play
-            Constructor<?> constructor = cacheClass.getConstructor(int.class);
-            Object cache = constructor.newInstance(tdl.get(0)[0]);
+            Constructor<?> constructor = null;
+            try {
+                constructor = cacheClass.getConstructor(int.class);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            Object cache = null;
+            try {
+                cache = constructor.newInstance(tdl.get(0)[0]);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
 
             for (int i = 1; i < methodsList.size() - 1; i++) {
 
