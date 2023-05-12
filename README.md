@@ -141,7 +141,7 @@ interface Cache {
 ```
 Create a text file in the resource directory with a sequence of cache methods from the test case:
 ```text
-["LFUCache","put","put","put","put","put"}
+["LFUCache","put","put","put","put","put"]
 ```
 Create a text file in the resource directory with the actual cache method parameters from the test case:
 ```text
