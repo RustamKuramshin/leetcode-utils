@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
@@ -143,6 +144,19 @@ public class LeetCodeUtils {
             this.val = val;
             this.left = left;
             this.right = right;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TreeNode treeNode = (TreeNode) o;
+            return val == treeNode.val && Objects.equals(left, treeNode.left) && Objects.equals(right, treeNode.right);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(val, left, right);
         }
 
         /**
@@ -307,7 +321,7 @@ public class LeetCodeUtils {
     /**
      * Common private helper methods are not relevant to leetcode problems.
      */
-    static class CommonUtils {
+    public static class CommonUtils {
 
         /**
          * Reading a file into a String
