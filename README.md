@@ -20,6 +20,8 @@ curl -O https://raw.githubusercontent.com/RustamKuramshin/leetcode-utils/main/sr
 
 Or manually copy the contents of the java class file from the following link [https://github.com/RustamKuramshin/leetcode-utils/blob/main/src/main/java/leetcode/utils/LeetCodeUtils.java](https://github.com/RustamKuramshin/leetcode-utils/blob/main/src/main/java/leetcode/utils/LeetCodeUtils.java).
 
+#### **REMOVE THE JAVA PACKAGE DECLARATION FROM THE JAVA CLASS FILE. OR SPECIFY THE NAME OF THE PACKAGE YOU NEED!**
+
 
 If necessary, import the class into your java/kotlin code:
 ```java
