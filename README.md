@@ -36,4 +36,98 @@ import static your.package_path.LeetCodeUtils.TreeNode;
 TreeNode root = TreeNode.ofArrayString("[2,1,3,null,4,null,7]");
 ```
 
+## Documentation
+
+### Singly Linked List
+
+Class of a singly linked list:
+```java
+class ListNode {
+
+    public int val;
+    public ListNode next;
+
+    public ListNode() {
+    }
+
+    public ListNode(int x) {
+        val = x;
+        next = null;
+    }
+    
+    ...
+}
+
+// initialize it: new ListNode()
+```
+Print out your linked list:
+```java
+listNode.printListNode()
+// will print [3, 2, 4, 5, 10]
+```
+
+### Doubly Linked List
+
+Doubly linked list class:
+```java
+class Node { 
+    
+    public Node prev;
+    public Node next;
+
+    public int val;
+    
+    public Node() {
+    }
+
+    public Node(int val) {
+        this.val = val;
+    }
+    
+    ...
+}
+
+// initialize it: new Node()
+```
+Print out your linked list:
+```java
+node.printNode()
+// will print [3, 2, 4, 5, 10]
+```
+
+### Binary Tree
+
+Binary Tree class:
+```java
+class TreeNode {
+
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+
+    public TreeNode() {
+    }
+
+    public TreeNode(int val) {
+        this.val = val;
+    }
+    
+    ...
+}
+
+// initialize it: new TreeNode()
+```
+Get a binary tree from the string representation of the level-order array:
+```java
+TreeNode root = TreeNode.ofArrayString("[2,1,3,null,4,null,7]");
+```
+Or just from the array:
+```java
+TreeNode root = TreeNode.array2btree([2,1,3,null,4,null,7]);
+```
+Or turn your binary tree into a level-order array:
+```java
+Integer[] levelOrderArray = TreeNode.btree2array(root);
+```
+
 ## Enjoy!

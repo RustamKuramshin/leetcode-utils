@@ -26,52 +26,6 @@ public class LeetCodeUtils {
     }
 
     /**
-     * Standard class describing a doubly linked list and supplemented with useful fields and methods.
-     */
-    public static class Node {
-
-        public Node prev;
-        public Node next;
-
-        public int val;
-
-        // If you need to store the key in problems with caches
-        public int key;
-
-        public Node() {
-        }
-
-        public Node(int val) {
-            this.val = val;
-        }
-
-        public Node(int key, int val) {
-            this.key = key;
-            this.val = val;
-        }
-
-        /**
-         * Prints a linked list in the format: [1,2,3]
-         */
-        public void printNode() {
-
-            StringBuilder res = new StringBuilder();
-            res.append("[");
-
-            Node node = this;
-            do {
-                res.append(node.val);
-                node = node.next;
-                if (node != null) res.append(", ");
-            } while (node != null);
-
-            res.append("]");
-
-            System.out.println(res);
-        }
-    }
-
-    /**
      * A standard class describing a singly linked list and complete with useful fields and methods.
      */
     public static class ListNode {
@@ -115,6 +69,52 @@ public class LeetCodeUtils {
             } while (node != null && !node.isTail);
 
             if (node != null) res.append(node.val);
+
+            res.append("]");
+
+            System.out.println(res);
+        }
+    }
+
+    /**
+     * Standard class describing a doubly linked list and supplemented with useful fields and methods.
+     */
+    public static class Node {
+
+        public Node prev;
+        public Node next;
+
+        public int val;
+
+        // If you need to store the key in problems with caches
+        public int key;
+
+        public Node() {
+        }
+
+        public Node(int val) {
+            this.val = val;
+        }
+
+        public Node(int key, int val) {
+            this.key = key;
+            this.val = val;
+        }
+
+        /**
+         * Prints a linked list in the format: [1,2,3]
+         */
+        public void printNode() {
+
+            StringBuilder res = new StringBuilder();
+            res.append("[");
+
+            Node node = this;
+            do {
+                res.append(node.val);
+                node = node.next;
+                if (node != null) res.append(", ");
+            } while (node != null);
 
             res.append("]");
 
