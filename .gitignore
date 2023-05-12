@@ -125,3 +125,4 @@ hs_err_pid*
 .idea
 *.iml
 target
+/src/main/java/leetcode/utils/usertesting/
