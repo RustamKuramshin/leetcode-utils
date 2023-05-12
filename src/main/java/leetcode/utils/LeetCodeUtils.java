@@ -233,7 +233,7 @@ public class LeetCodeUtils {
          */
         public static void playTestCase(Class<?> cacheClass, String methodsFilePath, String testDataFilePath) {
 
-            String methods = CommonUtils.readFileToString(methodsFilePath);
+            String methods = CommonUtils.readFileToString(methodsFilePath).replaceAll("\\s+","");
             String testData = CommonUtils.readFileToString(testDataFilePath).replaceAll("\\s+","");
 
             // processing methods
