@@ -1,4 +1,4 @@
-# Super Lightweight Java Library For Debug And Testing LeetCode Problems
+# Super Lightweight Java Library For Debug And Testing LeetCode Problems :sunglasses:
 
 ## Description
 A java library that will help you solve problems with leetcode. The library is represented by just one java class and does not require any external dependencies other than jdk.
@@ -12,3 +12,8 @@ All classes of leetcode's data structure (Node, ListNode and TreeNode) can be us
 
 ## Usage
 
+```shell
+cd /path/to/your/code/directory
+
+curl -O https://raw.githubusercontent.com/RustamKuramshin/leetcode-utils/main/src/main/java/leetcode/utils/LeetCodeUtils.java
+```
