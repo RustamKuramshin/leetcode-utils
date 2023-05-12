@@ -29,7 +29,7 @@ Or just put the java library class next to your classes.
 
 You can also make a static import of any leetcode data structure class to work with it in your code:
 ```java
-import static leetcode.utils.LeetCodeUtils.TreeNode;
+import static your.package_path.LeetCodeUtils.TreeNode;
 
 // ... your code
 
