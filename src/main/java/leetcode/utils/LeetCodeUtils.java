@@ -206,6 +206,7 @@ public class LeetCodeUtils {
 
             List<Integer> list = new ArrayList<>();
             Queue<TreeNode> queue = new LinkedList<>();
+
             queue.offer(root);
 
             while (!queue.isEmpty()) {
