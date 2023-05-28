@@ -10,10 +10,14 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -35,15 +39,11 @@ public class LeetCodeUtils {
         public int val;
         public ListNode next;
 
-        // Sign that a node is a tail in a looped linked list
-        public boolean isTail;
-
         public ListNode() {
         }
 
         public ListNode(int x) {
             val = x;
-            next = null;
         }
 
         public ListNode(int val, ListNode next) {
@@ -51,29 +51,38 @@ public class LeetCodeUtils {
             this.next = next;
         }
 
-        public ListNode(int x, boolean isTail) {
-            this(x);
-            this.isTail = isTail;
-        }
-
         /**
          * Printing a singly linked list with circularity in mind
          */
         public void printListNode() {
+
+            Set<ListNode> visited = new HashSet<>();
+            ListNode node = this;
+
             StringBuilder res = new StringBuilder();
             res.append("[");
+            boolean isCyclic = false;
 
-            ListNode node = this;
-            do {
+            while (node != null) {
+                if (visited.contains(node)) {
+                    isCyclic = true;
+                    break;
+                }
+
+                visited.add(node);
                 res.append(node.val);
-                node = node.next;
-                if (node != null) res.append(", ");
-            } while (node != null && !node.isTail);
+                if (node.next != null) {
+                    res.append(" -> ");
+                }
 
-            if (node != null) res.append(node.val);
+                node = node.next;
+            }
+
+            if (isCyclic) {
+                res.append("...");
+            }
 
             res.append("]");
-
             System.out.println(res);
         }
     }
@@ -148,10 +157,16 @@ public class LeetCodeUtils {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             TreeNode treeNode = (TreeNode) o;
-            return val == treeNode.val && Objects.equals(left, treeNode.left) && Objects.equals(right, treeNode.right);
+            return val == treeNode.val &&
+                    Objects.equals(left, treeNode.left) &&
+                    Objects.equals(right, treeNode.right);
         }
 
         @Override
@@ -161,7 +176,6 @@ public class LeetCodeUtils {
 
         /**
          * Constructor that allows you to create a binary tree from a standard array representation: [2,1,3,null,4,null,7].
-         *
          * @param treeAsStrArr
          * @return
          */
@@ -171,13 +185,220 @@ public class LeetCodeUtils {
         }
 
         /**
+         * The method returns the number of nodes of the binary tree
+         * @return
+         */
+        public int size() {
+            return sizeRecursive(this);
+        }
+
+        private int sizeRecursive(TreeNode node) {
+            if (node == null) {
+                return 0;
+            }
+
+            int leftSize = sizeRecursive(node.left);
+            int rightSize = sizeRecursive(node.right);
+
+            return 1 + leftSize + rightSize;
+        }
+
+        /**
+         * Initialization method of the random binary tree generator builder
+         * @return
+         */
+        public static RandomBinaryTreeBuilder randomBinaryTreeBuilder() {
+            return new RandomBinaryTreeBuilder();
+        }
+
+        /**
+         * Random Binary Tree Generator Builder
+         * @method nodesCount() - Required number of binary tree nodes
+         * @method minNodeVal() - The minimum possible value of a binary tree node
+         * @method maxNodeVal() - The maximum possible value of a binary tree node
+         * @method mode() - Generation mode. Either a simple binary tree (SIMPLE_BINARY_TREE)
+         * or a binary search tree (BINARY_SEARCH_TREE) will be generated
+         */
+        public static class RandomBinaryTreeBuilder {
+            private int nodesCount;
+            private int minNodeVal;
+            private int maxNodeVal;
+            private TreeNodeMode mode;
+
+            public RandomBinaryTreeBuilder nodesCount(int nodesCount) {
+                this.nodesCount = nodesCount;
+                return this;
+            }
+
+            public RandomBinaryTreeBuilder minNodeVal(int minNodeVal) {
+                this.minNodeVal = minNodeVal;
+                return this;
+            }
+
+            public RandomBinaryTreeBuilder maxNodeVal(int maxNodeVal) {
+                this.maxNodeVal = maxNodeVal;
+                return this;
+            }
+
+            public RandomBinaryTreeBuilder mode(TreeNodeMode mode) {
+                this.mode = mode;
+                return this;
+            }
+
+            public TreeNode build() {
+                if (mode == null) throw new IllegalStateException("Specify the mode (mode) of binary tree generation: simple binary tree or binary search tree.\n" +
+                        "For example: \n" +
+                        ".mode(TreeNodeMode.BINARY_SEARCH_TREE)\n" +
+                        "or\n" +
+                        ".mode(TreeNodeMode.SIMPLE_BINARY_TREE)");
+                return generateRandomBinaryTree(nodesCount, minNodeVal, maxNodeVal, mode);
+            }
+        }
+
+        /**
+         * Generation mode. Either a simple binary tree (SIMPLE_BINARY_TREE)
+         * or a binary search tree (BINARY_SEARCH_TREE) will be generated
+         */
+        public enum TreeNodeMode {
+            BINARY_SEARCH_TREE, SIMPLE_BINARY_TREE
+        }
+
+        private static TreeNode generateRandomBinaryTree(int nodesCount, int minNodeVal, int maxNodeVal, TreeNodeMode mode) {
+            if (nodesCount <= 0) {
+                return null;
+            }
+
+            Random random = new Random();
+
+            // Creating a root node
+            TreeNode root = new TreeNode(random.nextInt(maxNodeVal - minNodeVal + 1) + minNodeVal);
+
+            // We determine the maximum number of nodes that will be inserted into the tree
+            int maxInsertCount = nodesCount - 1;
+
+            // Insert the remaining nodes
+            for (int i = 0; i < maxInsertCount; i++) {
+                insertNode(root, new TreeNode(random.nextInt(maxNodeVal - minNodeVal + 1) + minNodeVal));
+            }
+
+            // If BINARY_SEARCH_TREE mode is specified, convert the tree to a binary search tree
+            if (mode == TreeNodeMode.BINARY_SEARCH_TREE) {
+                convertToBinarySearchTree(root);
+            }
+
+            return root;
+        }
+
+        // Auxiliary method for inserting a node into a tree
+        private static void insertNode(TreeNode root, TreeNode node) {
+            if (root == null || node == null) {
+                return;
+            }
+
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+
+            while (!queue.isEmpty()) {
+                TreeNode currNode = queue.poll();
+
+                if (currNode.left == null) {
+                    currNode.left = node;
+                    break;
+                } else {
+                    queue.offer(currNode.left);
+                }
+
+                if (currNode.right == null) {
+                    currNode.right = node;
+                    break;
+                } else {
+                    queue.offer(currNode.right);
+                }
+            }
+        }
+
+        // Method for converting a tree to a binary search tree
+        private static void convertToBinarySearchTree(TreeNode root) {
+            List<Integer> values = new ArrayList<>();
+            inorderTraversal(root, values);
+            Collections.sort(values); // Sorting node values
+            rebuildTree(root, values);
+        }
+
+        // Traversing the tree in the "inorder" order and saving values to a list
+        private static void inorderTraversal(TreeNode root, List<Integer> values) {
+            if (root == null) {
+                return;
+            }
+
+            inorderTraversal(root.left, values);
+            values.add(root.val);
+            inorderTraversal(root.right, values);
+        }
+
+        // Rebuilding the tree using sorted values
+        private static void rebuildTree(TreeNode root, List<Integer> values) {
+            if (root == null || values.isEmpty()) {
+                return;
+            }
+            rebuildTree(root.left, values);
+            // Replacing node values with sorted ones
+            root.val = values.remove(0);
+            rebuildTree(root.right, values);
+        }
+
+        /**
+         * The method prints a binary tree beautifully
+         */
+        public void printBinaryTree() {
+            printBinaryTreeHelper(this, "", false);
+        }
+
+        private void printBinaryTreeHelper(TreeNode node, String prefix, boolean isLeft) {
+            if (node == null) {
+                return;
+            }
+            System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.val);
+            printBinaryTreeHelper(node.left, prefix + (isLeft ? "│   " : "    "), true);
+            printBinaryTreeHelper(node.right, prefix + (isLeft ? "│   " : "    "), false);
+        }
+
+        /**
+         * The method allows you to add a new node to the binary search tree
+         * @param node
+         */
+        public void addNode(TreeNode node) {
+            if (node == null) {
+                return;
+            }
+
+            if (this.equals(node)) {
+                return; // The node is already present in the tree, stop inserting
+            }
+
+            if (node.val < this.val) {
+                if (left != null) {
+                    left.addNode(node); // Recursively insert into the left subtree
+                } else {
+                    left = node; // Inserting the node as the left child
+                }
+            } else if (node.val > this.val) {
+                if (right != null) {
+                    right.addNode(node); // Recursively insert into the right subtree
+                } else {
+                    right = node; // Inserting the node as the right child
+                }
+            }
+        }
+
+        /**
          * A method that converts an integer array obtained by breadth-first traversal of a binary tree into a binary tree.
          *
          * @param arr
          * @param i
          * @return
          */
-        public static TreeNode array2btree(Integer[] arr, int i) {
+        private static TreeNode array2btree(Integer[] arr, int i) {
             TreeNode treeNode = null;
 
             if (i < arr.length) {
@@ -199,7 +420,7 @@ public class LeetCodeUtils {
          * @param root
          * @return
          */
-        public static Integer[] btree2array(TreeNode root) {
+        private static Integer[] btree2array(TreeNode root) {
             if (root == null) {
                 return new Integer[0];
             }
@@ -277,13 +498,13 @@ public class LeetCodeUtils {
             }
 
             // play
-            Constructor<?> constructor = null;
+            Constructor<?> constructor;
             try {
                 constructor = cacheClass.getConstructor(int.class);
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
-            Object cache = null;
+            Object cache;
             try {
                 cache = constructor.newInstance(tdl.get(0)[0]);
             } catch (InstantiationException e) {
@@ -322,7 +543,7 @@ public class LeetCodeUtils {
     /**
      * Common private helper methods are not relevant to leetcode problems.
      */
-    public static class CommonUtils {
+    private static class CommonUtils {
 
         /**
          * Reading a file into a String
