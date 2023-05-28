@@ -214,8 +214,8 @@ public class LeetCodeUtils {
         /**
          * Random Binary Tree Generator Builder
          * @method nodesCount() - Required number of binary tree nodes
-         * @method minNodeVal() - The minimum possible value of a binary tree node
-         * @method maxNodeVal() - The maximum possible value of a binary tree node
+         * @method minNodeVal() - Minimum possible value of a binary tree node
+         * @method maxNodeVal() - Maximum possible value of a binary tree node
          * @method mode() - Generation mode. Either a simple binary tree (SIMPLE_BINARY_TREE)
          * or a binary search tree (BINARY_SEARCH_TREE) will be generated
          */
@@ -391,13 +391,8 @@ public class LeetCodeUtils {
             }
         }
 
-        /**
-         * A method that converts an integer array obtained by breadth-first traversal of a binary tree into a binary tree.
-         *
-         * @param arr
-         * @param i
-         * @return
-         */
+
+        // A method that converts an integer array obtained by breadth-first traversal of a binary tree into a binary tree.
         private static TreeNode array2btree(Integer[] arr, int i) {
             TreeNode treeNode = null;
 
@@ -415,11 +410,7 @@ public class LeetCodeUtils {
             return treeNode;
         }
 
-        /**
-         * A method that converts a binary tree to an integer array obtained by breadth-first traversal of the binary tree.
-         * @param root
-         * @return
-         */
+        // A method that converts a binary tree to an integer array obtained by breadth-first traversal of the binary tree.
         private static Integer[] btree2array(TreeNode root) {
             if (root == null) {
                 return new Integer[0];

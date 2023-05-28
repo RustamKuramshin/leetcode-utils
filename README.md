@@ -120,17 +120,47 @@ class TreeNode {
 
 // initialize it: new TreeNode()
 ```
-Get a binary tree from the string representation of the level-order array:
+#### Get a binary tree from the string representation of the level-order array:
 ```java
 TreeNode root = TreeNode.ofArrayString("[2,1,3,null,4,null,7]");
 ```
-Or just from the array:
+#### Generate a binary tree of arbitrary size! It is possible to pass parameters specific to binary trees from the LeetCode tasks.
 ```java
-TreeNode root = TreeNode.array2btree([2,1,3,null,4,null,7]);
+TreeNode root = TreeNode.randomBinaryTreeBuilder()
+        .nodesCount(5000) // Required number of binary tree nodes
+        .minNodeVal(-1_000_000_000) // Minimum possible value of a binary tree node
+        .maxNodeVal(1_000_000_000) // Maximum possible value of a binary tree node
+        .mode(TreeNodeMode.BINARY_SEARCH_TREE) // Generation mode
+        .build();
 ```
-Or turn your binary tree into a level-order array:
+#### Beautiful binary tree printing
 ```java
-Integer[] levelOrderArray = TreeNode.btree2array(root);
+root.printBinaryTree();
+```
+method will output:
+```text
+└── 2
+    ├── -2
+    │   ├── -8
+    │   │   ├── -10
+    │   │   └── -5
+    │   └── -1
+    │       ├── -2
+    └── 4
+        ├── 3
+        └── 5
+```
+#### Method of inserting a new node into a binary tree
+```java
+root.addNode(node);
+```
+#### A method for obtaining the size of a binary tree. Returns the number of nodes.
+```java
+root.size();
+```
+#### The classic equals() and hashCode() methods, which will help compare two binary trees.
+```java
+root1.equals(root2);
 ```
 
 ### Test Case Player For Integer Cache Problems
