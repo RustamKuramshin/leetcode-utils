@@ -1,4 +1,4 @@
-package leetcode.utils;
+package leetcode.utils.review;
 
 import java.io.BufferedReader;
 import java.io.IOException;
