@@ -85,6 +85,44 @@ public class LeetCodeUtils {
             res.append("]");
             System.out.println(res);
         }
+
+        public enum Order {
+            ASCENDING,
+            RANDOM
+        }
+
+        public static ListNode generateRandomListNode(int nodesCount, int start, int end, Order order) {
+            Random random = new Random();
+            ListNode dummy = new ListNode(0);
+            ListNode current = dummy;
+            Set<Integer> set = new HashSet<>();
+
+            for (int i = 0; i < nodesCount; i++) {
+                int value;
+                do {
+                    value = random.nextInt(end - start + 1) + start;
+                } while (set.contains(value));
+
+                set.add(value);
+
+                if (order == Order.ASCENDING) {
+                    // Inserting the value in sorted order (ascending)
+                    ListNode newNode = new ListNode(value);
+                    while (current.next != null && current.next.val < value) {
+                        current = current.next;
+                    }
+                    newNode.next = current.next;
+                    current.next = newNode;
+                    current = dummy;  // Returning the pointer to the beginning of the list
+                } else {
+                    // Just add the value to the end of the list (without ordering)
+                    current.next = new ListNode(value);
+                    current = current.next;
+                }
+            }
+
+            return dummy.next;  // Returning a list without a dummy node
+        }
     }
 
     /**
