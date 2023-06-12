@@ -72,7 +72,7 @@ listNode.printListNode()
 ```java
 ListNode listNode = ListNode.generateRandomListNode(30, 0, 100, ListNode.Order.ASCENDING);
 ```
-#### Generate a singly linked list from the string representation of the array:
+#### Create a singly linked list from the string representation of the array:
 ```java
 ListNode list = ListNode.ofArrayString("[-10,-3,0,5,9]");
 ```
