@@ -63,10 +63,18 @@ class ListNode {
 
 // initialize it: new ListNode()
 ```
-Print out your linked list (takes into account cyclic (closed) linked lists):
+#### Print out your linked list (takes into account cyclic (closed) linked lists):
 ```java
 listNode.printListNode()
 // will print [3, 2, 4, 5, 10]
+```
+#### Generate a random singly linked list with the specified parameters:
+```java
+ListNode listNode = ListNode.generateRandomListNode(30, 0, 100, ListNode.Order.ASCENDING);
+```
+#### Generate a singly linked list from the string representation of the array:
+```java
+ListNode list = ListNode.ofArrayString("[-10,-3,0,5,9]");
 ```
 
 ### Doubly Linked List
