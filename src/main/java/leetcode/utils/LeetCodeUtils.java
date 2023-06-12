@@ -86,12 +86,15 @@ public class LeetCodeUtils {
             System.out.println(res);
         }
 
-        public enum Order {
-            ASCENDING,
-            RANDOM
-        }
-
-        public static ListNode generateRandomListNode(int nodesCount, int start, int end, Order order) {
+        /**
+         * The method generates a random singly linked list
+         * @param nodesCount - required number of nodes of a singly linked list
+         * @param min - minimum possible value of the list node
+         * @param max - maximum possible value of the list node
+         * @param order - a sign of the ordering of nodes in a singly linked list
+         * @return
+         */
+        public static ListNode generateRandomListNode(int nodesCount, int min, int max, Order order) {
             Random random = new Random();
             ListNode dummy = new ListNode(0);
             ListNode current = dummy;
@@ -100,7 +103,7 @@ public class LeetCodeUtils {
             for (int i = 0; i < nodesCount; i++) {
                 int value;
                 do {
-                    value = random.nextInt(end - start + 1) + start;
+                    value = random.nextInt(max - min + 1) + min;
                 } while (set.contains(value));
 
                 set.add(value);
@@ -119,6 +122,33 @@ public class LeetCodeUtils {
                     current.next = new ListNode(value);
                     current = current.next;
                 }
+            }
+
+            return dummy.next;  // Returning a list without a dummy node
+        }
+
+        public enum Order {
+            ASCENDING,
+            RANDOM
+        }
+
+        /**
+         * Constructor that allows you to create a singly linked list from array representation: [-10,-3,0,5,9].
+         * @param listNodeAsStrArr
+         * @return
+         */
+        public static ListNode ofArrayString(String listNodeAsStrArr) {
+            // Remove square brackets from strings and separate elements by comma
+            String[] strArray = listNodeAsStrArr.substring(1, listNodeAsStrArr.length() - 1).split(",");
+
+            ListNode dummy = new ListNode(0);
+            ListNode current = dummy;
+
+            for (String str : strArray) {
+                // Convert the string to an integer and create a new node
+                int value = Integer.parseInt(str.trim());
+                current.next = new ListNode(value);
+                current = current.next;
             }
 
             return dummy.next;  // Returning a list without a dummy node
